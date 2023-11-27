@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        
+        <title>Contact Form</title>
+
+        <link href="img/hello_2.png" rel="icon">
+        <link href="img/hello_2.png" rel="apple-touch-icon">
+
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <section>
+            <div class="container">
+                <div class="contactInfo">
+                    <div class="hello">
+                        <img src="img/hello_1.png" alt="">
+                    </div>
+                    <div>
+                        <h1>I'm Zuyinatin Khofifah</h1>
+                        <h2>Contant Info</h2>
+                        <ul class="info">
+                            <li>
+                                <span><img src="img/map.png" alt=""></span>
+                                <span>Jl. Raya Bendosewu, Talun, 
+                                    <br>Kab. Blitar, Jawa Timur</span>
+                            </li>
+                            <li>
+                                <span><img src="img/email.png" alt=""></span>
+                                <span>zuyinatinkhofifah190@gmail.com</span>
+                            </li>
+                            <li>
+                                <span><img src="img/whatsapp.png" alt=""></span>
+                                <span>+62 857-0698-5655</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="sci">
+                        <li><a href="https://id.linkedin.com/in/zuyinatin-khofifah" target="_blank"><img src="img/linkedin.png" alt=""></a></li>
+                        <li><a href="https://github.com/ZuyinatinK" target="_blank"><img src="img/github.png" alt=""></a></li>
+                        <li><a href="mailto:zuyinatinkhofifah190@gmail.com" target="_blank"><img src="img/gmail.png" alt=""></a></li>
+                        <li><a href="https://instagram.com/zuyinatink?utm_source=qr&igshid=ZDc4ODBmNjlmNQ%3D%3D" target="_blank"><img src="img/instagram.png" alt=""></a></li>
+                    </ul>
+                </div>
+                <div class="contactForm">
+                    <h2>Send a Message</h2>
+                    <form class="formBox" name="contact-form" action="" method="POST">
+                        <div class="inputBox w50">
+                            <input type="text" id="first_name" name="first_name" required>
+                            <span>First Name</span>
+                        </div>
+                        <div class="inputBox w50">
+                            <input type="text" id="last_name" name="last_name" required>
+                            <span>Last Name</span>
+                        </div>
+                        <div class="inputBox w50">
+                            <input type="email" id="email" name="email" required>
+                            <span>Email Address</span>
+                        </div>
+                        <div class="inputBox w50">
+                            <input type="text" id="phone" name="phone" required>
+                            <span>Mobile Number</span>
+                        </div>
+                        <div class="inputBox w100">
+                            <textarea id="message" name="message" required></textarea>
+                            <span>Write your message here...</span>
+                        </div>
+                        <div class="button-gr">
+                            <button class="button-submit" type="submit">Send</button>
+                            <button class="btn btn-primary button-loading d-none" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="img/send.png" alt="">
+                        <p>Your message has been successfully sent!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Thanks</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <script>
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzEWRjK89fsme-vsXB7xnYazxwz5aV0dJfshLAg-o6Dm-8EpWbI1RbobjumYwdxWNO2mg/exec'
+            const form = document.forms['contact-form'];
+            const btnSubmit = document.querySelector('.button-submit');
+            const btnLoading = document.querySelector('.button-loading');
+            const myModal = document.querySelector('#exampleModal');
+            
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                // Submit
+                // Loading tampil, kirim hilang
+                btnLoading.classList.toggle('d-none');
+                btnSubmit.classList.toggle('d-none');
+
+                fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                    .then(response => {
+                        // loading hilang, kirim muncul
+                        btnLoading.classList.toggle('d-none');
+                        btnSubmit.classList.toggle('d-none');
+
+                        // tampil modal
+                        if (response.ok) {
+                            // Show the modal if the response is successful
+                            const modal = new bootstrap.Modal(myModal); // Initialize Bootstrap modal
+                            modal.show(); // Show the modal
+                            form.reset();
+                            console.log('Success!', response);
+                        } else {
+                            console.error('Error! Failed to submit form.');
+                        }
+                    })
+                    .catch(error => console.error('Error!', error.message))
+            })
+        </script>
+    
+    </body>
+</html>
